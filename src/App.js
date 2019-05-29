@@ -40,7 +40,8 @@ class App extends Component {
   search = (e) => {
     const { value } = e.target;
 
-    this.props.store.gallery.setq(value);
+    //this.props.store.gallery.setq(value);
+    this.props.store.gallery.search(value);
   };
 
   handleChange = (e) => {
@@ -89,7 +90,7 @@ class App extends Component {
             />
           </Grid>
         </Grid>
-        {this.props.store.gallery.searchParams.q}
+
         <Grid container justify="center" spacing={3}>
           <Grid item xs={12} sm={10} md={8} lg={5} xl={3}>
 
