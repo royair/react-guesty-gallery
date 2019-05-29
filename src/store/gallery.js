@@ -40,7 +40,7 @@ class Gallery {
 
   search(str) {
     axios
-      .get(`http://api.giphy.com/v1/gifs/search?api_key=dCpV0z0dW988CrZDZ8DYJtLMrJJI0pSz&q=${str}&limit=9`)
+      .get(`https://api.giphy.com/v1/gifs/search?api_key=dCpV0z0dW988CrZDZ8DYJtLMrJJI0pSz&q=${str}&limit=9`)
       .then((res) => {
         runInAction(() => {this.photos = res.data.data});
       });
