@@ -1,50 +1,75 @@
 import { shuffle } from 'lodash';
 import {
   decorate,
+  observe,
   observable,
   computed,
   action,
   toJS,
   configure,
-  runInAction
+  runInAction,
+  reaction,
+  autorun
 } from "mobx";
 import axios from 'axios'
-import { sortBy, cloneDeep } from 'lodash';
 import moment from 'moment';
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import qs from 'query-string';
 import React from "react";
+import qs from "query-string";
 
 const DEFAULT_SORT_TYPE   = 'TITLE';
 const DEFAULT_SORT_VALUE  = 'ASC';
-const DEFAULT_SORT_STRING = 'Sort by Title, ASC';
+const DEFAULT_SORT_STRING = 'Sort by Title ASC';
 
 configure({ enforceActions: 'observed' });
 
 class Gallery {
-  constructor() {
+  constructor(api) {
     this._photos      = [];
     this.searchParams = {
       sortType: DEFAULT_SORT_TYPE,
       sortValue: DEFAULT_SORT_VALUE,
       q: ''
     };
-    this.q            = '';
-    this._sortString  = DEFAULT_SORT_STRING;
-  }
 
-  setq(str) {
-    this.q = str;
-  }
+    this._sortString = DEFAULT_SORT_STRING;
 
-  search(str) {
-    axios
-      .get(`https://api.giphy.com/v1/gifs/search?api_key=dCpV0z0dW988CrZDZ8DYJtLMrJJI0pSz&q=${str}&limit=9`)
-      .then((res) => {
-        runInAction(() => {this.photos = res.data.data});
+    reaction(
+      () => this.searchParams.q,
+      this.search);
+
+    reaction(
+      () => Object.values(this.searchParams),
+      () => {
+        window.history.pushState('', null, '?' + qs.stringify(this.searchParams));
       });
+
+    reaction(
+      () => ([this.searchParams.sortValue, this.searchParams.sortType]),
+      () => {
+        const by         = this.searchParams.sortType === 'DATETIME' ? 'Imported date' : 'Title';
+        this._sortString = `Sort by ${by} ${this.searchParams.sortValue}`;
+      });
+  };
+
+  setQ(str) {
+    this.searchParams.q = str;
   }
+
+  search = () => {
+    if (!this.searchParams.q) {
+      runInAction(() => {
+        this.photos = [];
+      });
+    }
+
+    axios
+      .get(`https://api.giphy.com/v1/gifs/search?api_key=dCpV0z0dW988CrZDZ8DYJtLMrJJI0pSz&q=${this.searchParams.q}&limit=9`)
+      .then((res) => {
+        runInAction(() => {
+          this.photos = res.data.data;
+        });
+      });
+  };
 
   get sortString() {
     return this._sortString;
@@ -52,7 +77,7 @@ class Gallery {
 
   set sortString(str) {
     switch (str) {
-      case 'Sort by Title, ASC':
+      case 'Sort by Title ASC':
         this.searchParams.sortValue = 'ASC';
         this.searchParams.sortType  = 'TITLE';
         break;
@@ -137,9 +162,7 @@ decorate(Gallery, {
   sortString: computed,
   photos: computed,
   searchParams: observable,
-  q: observable,
-  search: action,
-  setq: action
+  setQ: action,
 });
 
 export default Gallery;

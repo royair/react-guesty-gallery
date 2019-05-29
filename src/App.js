@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { toJS } from 'mobx';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -16,13 +17,14 @@ import qs from 'query-string';
 import moment from 'moment';
 
 import './App.scss';
+import { runInAction } from "mobx";
 
 class App extends Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = { sortType: 'fdfsdf' };
-
+  componentDidMount() {
     this.initSearchParams();
   }
 
@@ -30,7 +32,9 @@ class App extends Component {
     const oldSearchParams = this.props.store.gallery.searchParams;
     const newSearchParams = qs.parse(this.props.location.search);
 
-    this.props.store.gallery.searchParams = { ...oldSearchParams, ...newSearchParams };
+    runInAction(() => {
+      this.props.store.gallery.searchParams = { ...oldSearchParams, ...newSearchParams };
+    });
   }
 
   formatDate = (date) => {
@@ -40,8 +44,7 @@ class App extends Component {
   search = (e) => {
     const { value } = e.target;
 
-    //this.props.store.gallery.setq(value);
-    this.props.store.gallery.search(value);
+    this.props.store.gallery.setQ(value);
   };
 
   handleChange = (e) => {
@@ -49,8 +52,7 @@ class App extends Component {
   };
 
   render() {
-    let { photos }  = this.props.store.gallery;
-    let numOfPhotos = this.state.page * 9;
+    let { photos } = this.props.store.gallery;
 
     let photosUi = photos.map((photo) =>
       <Grid key={photo.id} item>
@@ -60,9 +62,11 @@ class App extends Component {
               {photo.slug}
             </Typography>
           </CardContent>
+
+
           <CardMedia
             style={{ height: '300px' }}
-            image={photo.images.original.url}
+            image={photo.images.downsized.url}
             title="Contemplative Reptile"
           />
           <CardContent>
@@ -86,6 +90,7 @@ class App extends Component {
               className=""
               margin="normal"
               variant="outlined"
+              value={this.props.store.gallery.searchParams.q}
               onChange={(e) => this.search(e)}
             />
           </Grid>
@@ -100,13 +105,15 @@ class App extends Component {
                 sort
               </InputLabel>
 
+              {this.props.store.gallery.sortString}
+
               <Select
                 value={this.props.store.gallery.sortString}
                 onChange={this.handleChange}
                 input={<OutlinedInput labelWidth={1} name="age"
                                       id="outlined-age-simple"/>}
               >
-                <MenuItem value={'Sort by Title, ASC'}>Sort by Title,
+                <MenuItem value={'Sort by Title ASC'}>Sort by Title
                   ASC</MenuItem>
                 <MenuItem value={'Sort by Title DESC'}>Sort by Title
                   DESC</MenuItem>
