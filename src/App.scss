@@ -1,0 +1,12 @@
+.App {
+  max-width: 1920px;
+  margin: 0 auto;
+
+  .MuiGrid-item {
+    .MuiTypography-body1 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
