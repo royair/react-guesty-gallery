@@ -101,15 +101,15 @@ class App extends Component {
 
             <FormControl variant="outlined">
 
-              <InputLabel ref={this.sortType} htmlFor="outlined-age-simple">
+              <InputLabel ref={this.sortType} htmlFor="outlined-sort-simple">
                 sort
               </InputLabel>
 
               <Select
                 value={this.props.store.gallery.sortString}
                 onChange={this.handleChange}
-                input={<OutlinedInput labelWidth={1} name="age"
-                                      id="outlined-age-simple"/>}
+                input={<OutlinedInput labelWidth={30} name="sort"
+                                      id="outlined-sort-simple"/>}
               >
                 <MenuItem value={'Sort by Title ASC'}>Sort by Title
                   ASC</MenuItem>
