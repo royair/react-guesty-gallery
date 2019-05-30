@@ -105,8 +105,6 @@ class App extends Component {
                 sort
               </InputLabel>
 
-              {this.props.store.gallery.sortString}
-
               <Select
                 value={this.props.store.gallery.sortString}
                 onChange={this.handleChange}
