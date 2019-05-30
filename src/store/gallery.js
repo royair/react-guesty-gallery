@@ -133,11 +133,11 @@ class Gallery {
 
   compareByTitle = (a, b) => {
 
-    if (a.slug < b.slug) {
+    if (a.title < b.title) {
       return this.searchParams.sortValue === 'ASC' ? -1 : 1;
     }
 
-    if (a.slug > b.slug) {
+    if (a.title > b.title) {
       return this.searchParams.sortValue === 'ASC' ? 1 : -1;
     }
 
