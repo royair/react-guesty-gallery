@@ -40,7 +40,7 @@ class Gallery {
     reaction(
       () => Object.values(this.searchParams),
       () => {
-        window.history.pushState('', null, '?' + qs.stringify(this.searchParams));
+        window.history.pushState('', null, '#/?' + qs.stringify(this.searchParams));
       });
 
     reaction(
