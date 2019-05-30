@@ -59,7 +59,7 @@ class App extends Component {
         <Card style={{ width: '300px' }}>
           <CardContent>
             <Typography component="p">
-              {photo.slug}
+              {photo.title}
             </Typography>
           </CardContent>
 
