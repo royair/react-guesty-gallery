@@ -15,6 +15,7 @@ import axios from 'axios'
 import moment from 'moment';
 import React from "react";
 import qs from "query-string";
+import { debounce } from 'lodash';
 
 const DEFAULT_SORT_TYPE   = 'TITLE';
 const DEFAULT_SORT_VALUE  = 'ASC';
@@ -35,7 +36,7 @@ class Gallery {
 
     reaction(
       () => this.searchParams.q,
-      this.search);
+      debounce(this.search, 300));
 
     reaction(
       () => Object.values(this.searchParams),
