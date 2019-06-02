@@ -1,15 +1,11 @@
-import { shuffle } from 'lodash';
 import {
   decorate,
-  observe,
   observable,
   computed,
   action,
-  toJS,
   configure,
   runInAction,
   reaction,
-  autorun
 } from "mobx";
 import axios from 'axios'
 import moment from 'moment';
@@ -24,47 +20,50 @@ const DEFAULT_SORT_STRING = 'Sort by Title ASC';
 configure({ enforceActions: 'observed' });
 
 class Gallery {
-  constructor(api) {
-    this._photos      = [];
-    this.searchParams = {
+  constructor() {
+    this._photos   = [];
+    this.urlParams = {
       sortType: DEFAULT_SORT_TYPE,
       sortValue: DEFAULT_SORT_VALUE,
-      q: ''
+      q: '',
     };
 
     this._sortString = DEFAULT_SORT_STRING;
 
+    // initiate search every time 'q' (query) has changed
     reaction(
-      () => this.searchParams.q,
+      () => this.urlParams.q,
       debounce(this.search, 300));
 
+    // update url params and website's history every time model has changed
     reaction(
-      () => Object.values(this.searchParams),
+      () => Object.values(this.urlParams),
       () => {
-        window.history.pushState('', null, '#/?' + qs.stringify(this.searchParams));
+        window.history.pushState('', null, '#/?' + qs.stringify(this.urlParams));
       });
 
+    // update
     reaction(
-      () => ([this.searchParams.sortValue, this.searchParams.sortType]),
+      () => ([this.urlParams.sortValue, this.urlParams.sortType]),
       () => {
-        const by         = this.searchParams.sortType === 'DATETIME' ? 'Imported date' : 'Title';
-        this._sortString = `Sort by ${by} ${this.searchParams.sortValue}`;
+        const by         = this.urlParams.sortType === 'DATETIME' ? 'Imported date' : 'Title';
+        this._sortString = `Sort by ${by} ${this.urlParams.sortValue}`;
       });
   };
 
   setQ(str) {
-    this.searchParams.q = str;
+    this.urlParams.q = str;
   }
 
   search = () => {
-    if (!this.searchParams.q) {
+    if (!this.urlParams.q) {
       runInAction(() => {
         this.photos = [];
       });
     }
 
     axios
-      .get(`https://api.giphy.com/v1/gifs/search?api_key=dCpV0z0dW988CrZDZ8DYJtLMrJJI0pSz&q=${this.searchParams.q}&limit=9`)
+      .get(`https://api.giphy.com/v1/gifs/search?api_key=dCpV0z0dW988CrZDZ8DYJtLMrJJI0pSz&q=${this.urlParams.q}&limit=9`)
       .then((res) => {
         runInAction(() => {
           this.photos = res.data.data;
@@ -79,23 +78,23 @@ class Gallery {
   set sortString(str) {
     switch (str) {
       case 'Sort by Title ASC':
-        this.searchParams.sortValue = 'ASC';
-        this.searchParams.sortType  = 'TITLE';
+        this.urlParams.sortValue = 'ASC';
+        this.urlParams.sortType  = 'TITLE';
         break;
 
       case 'Sort by Title DESC':
-        this.searchParams.sortValue = 'DESC';
-        this.searchParams.sortType  = 'TITLE';
+        this.urlParams.sortValue = 'DESC';
+        this.urlParams.sortType  = 'TITLE';
         break;
 
       case 'Sort by Imported date ASC':
-        this.searchParams.sortValue = 'ASC';
-        this.searchParams.sortType  = 'DATETIME';
+        this.urlParams.sortValue = 'ASC';
+        this.urlParams.sortType  = 'DATETIME';
         break;
 
       case 'Sort by Imported date DESC':
-        this.searchParams.sortValue = 'DESC';
-        this.searchParams.sortType  = 'DATETIME';
+        this.urlParams.sortValue = 'DESC';
+        this.urlParams.sortType  = 'DATETIME';
         break;
     }
 
@@ -108,7 +107,7 @@ class Gallery {
 
   get photos() {
 
-    switch (this.searchParams.sortType) {
+    switch (this.urlParams.sortType) {
       case 'TITLE':
         return this.sortByTitle(this._photos);
         break;
@@ -134,11 +133,11 @@ class Gallery {
   compareByTitle = (a, b) => {
 
     if (a.title < b.title) {
-      return this.searchParams.sortValue === 'ASC' ? -1 : 1;
+      return this.urlParams.sortValue === 'ASC' ? -1 : 1;
     }
 
     if (a.title > b.title) {
-      return this.searchParams.sortValue === 'ASC' ? 1 : -1;
+      return this.urlParams.sortValue === 'ASC' ? 1 : -1;
     }
 
     return 0;
@@ -146,11 +145,11 @@ class Gallery {
 
   compareByDate = (a, b) => {
     if (moment(a.import_datetime).isBefore(b.import_datetime)) {
-      return this.searchParams.sortValue === 'ASC' ? -1 : 1;
+      return this.urlParams.sortValue === 'ASC' ? -1 : 1;
     }
 
     if (moment(b.import_datetime).isBefore(a.import_datetime)) {
-      return this.searchParams.sortValue === 'ASC' ? 1 : -1;
+      return this.urlParams.sortValue === 'ASC' ? 1 : -1;
     }
 
     return 0;
@@ -162,7 +161,7 @@ decorate(Gallery, {
   _sortString: observable,
   sortString: computed,
   photos: computed,
-  searchParams: observable,
+  urlParams: observable,
   setQ: action,
 });
 

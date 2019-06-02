@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { toJS } from 'mobx';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -25,15 +24,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.initSearchParams();
+    this.initUrlParams();
   }
 
-  initSearchParams() {
-    const oldSearchParams = this.props.store.gallery.searchParams;
-    const newSearchParams = qs.parse(this.props.location.search);
+  initUrlParams() {
+    const oldUrlParams = this.props.store.gallery.urlParams;
+    const newUrlParams = qs.parse(this.props.location.search);
 
     runInAction(() => {
-      this.props.store.gallery.searchParams = { ...oldSearchParams, ...newSearchParams };
+      this.props.store.gallery.urlParams = { ...oldUrlParams, ...newUrlParams };
     });
   }
 
@@ -62,8 +61,6 @@ class App extends Component {
               {photo.title}
             </Typography>
           </CardContent>
-
-
           <CardMedia
             style={{ height: '300px' }}
             image={photo.images.downsized.url}
@@ -81,27 +78,24 @@ class App extends Component {
     return (
       <div className="App">
         <Grid container justify="center" spacing={3}>
-          <Grid item xs={12} sm={10} md={8} lg={5} xl={3}>
+          <Grid item xs={8}>
             <TextField
               style={{ width: '100%' }}
               id="outlined-search"
               label="Search photos"
               type="search"
               className=""
-              margin="normal"
               variant="outlined"
-              value={this.props.store.gallery.searchParams.q}
+              value={this.props.store.gallery.urlParams.q}
               onChange={(e) => this.search(e)}
             />
           </Grid>
-        </Grid>
 
-        <Grid container justify="center" spacing={3}>
-          <Grid item xs={12} sm={10} md={8} lg={5} xl={3}>
-
+          <Grid item xs={4}>
             <FormControl variant="outlined">
-
-              <InputLabel ref={this.sortType} htmlFor="outlined-sort-simple">
+              <InputLabel ref={this.sortType}
+                          htmlFor="outlined-sort-simple"
+              >
                 sort
               </InputLabel>
 
@@ -121,8 +115,8 @@ class App extends Component {
                   date DESC</MenuItem>
               </Select>
             </FormControl>
-
           </Grid>
+
         </Grid>
 
         <Grid container justify="center" spacing={3}>
