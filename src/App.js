@@ -11,12 +11,43 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import qs from 'query-string';
 import moment from 'moment';
 
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import DirectionsIcon from '@material-ui/icons/Directions';
+
 import './App.scss';
 import { runInAction } from "mobx";
+
+const useStyles = {
+  root: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 400,
+  },
+  input: {
+    marginLeft: 8,
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    width: 1,
+    height: 28,
+    margin: 4,
+  },
+};
 
 class App extends Component {
   constructor(props) {
@@ -77,47 +108,58 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Grid container justify="center" spacing={3}>
-          <Grid item xs={8}>
-            <TextField
-              style={{ width: '100%' }}
-              id="outlined-search"
-              label="Search photos"
-              type="search"
-              className=""
-              variant="outlined"
-              value={this.props.store.gallery.urlParams.q}
-              onChange={(e) => this.search(e)}
-            />
+
+
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Grid container justify="center" spacing={3} alignItems="center">
+
+              <Paper style={useStyles.root}>
+                <InputBase style={useStyles.input}
+                           placeholder="Search giphy"
+                           value={this.props.store.gallery.urlParams.q}
+                           onChange={(e) => this.search(e)}
+                />
+                <IconButton style={useStyles.iconButton} aria-label="Search">
+                  <SearchIcon/>
+                </IconButton>
+              </Paper>
+
+              <Grid item xs={2}>
+                <FormControl variant="outlined"
+                             style={{ width: '100%' }}
+                             margin="normal">
+                  <InputLabel ref={this.sortType}
+                              htmlFor="outlined-sort-simple"
+                  >
+                    sort
+                  </InputLabel>
+
+                  <Select
+                    value={this.props.store.gallery.sortString}
+                    onChange={this.handleChange}
+                    input={<OutlinedInput labelWidth={30}
+                                          name="sort"
+                                          id="outlined-sort-simple"/>}
+                  >
+                    <MenuItem value={'Sort by Title ASC'}>Sort by Title
+                      ASC</MenuItem>
+                    <MenuItem value={'Sort by Title DESC'}>Sort by Title
+                      DESC</MenuItem>
+                    <MenuItem value={'Sort by Imported date ASC'}>Sort by
+                      Imported
+                      date ASC</MenuItem>
+                    <MenuItem value={'Sort by Imported date DESC'}>Sort by
+                      Imported
+                      date DESC</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+            </Grid>
           </Grid>
-
-          <Grid item xs={4}>
-            <FormControl variant="outlined">
-              <InputLabel ref={this.sortType}
-                          htmlFor="outlined-sort-simple"
-              >
-                sort
-              </InputLabel>
-
-              <Select
-                value={this.props.store.gallery.sortString}
-                onChange={this.handleChange}
-                input={<OutlinedInput labelWidth={30} name="sort"
-                                      id="outlined-sort-simple"/>}
-              >
-                <MenuItem value={'Sort by Title ASC'}>Sort by Title
-                  ASC</MenuItem>
-                <MenuItem value={'Sort by Title DESC'}>Sort by Title
-                  DESC</MenuItem>
-                <MenuItem value={'Sort by Imported date ASC'}>Sort by Imported
-                  date ASC</MenuItem>
-                <MenuItem value={'Sort by Imported date DESC'}>Sort by Imported
-                  date DESC</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-
         </Grid>
+
 
         <Grid container justify="center" spacing={3}>
           <Grid item>
