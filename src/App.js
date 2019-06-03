@@ -3,10 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { runInAction } from "mobx";
 import qs from 'query-string';
 
-import Counter from './components/Counter';
-import Cards from './components/Cards';
-import Search from './components/Search';
-import Sort from './components/Sort';
+import { Counter, Sort, Search, Cards } from './components/index';
 
 import Grid from '@material-ui/core/Grid';
 

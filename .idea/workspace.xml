@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9084c476-3382-4e0a-a96f-8536020e7893" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/gallery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/gallery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,26 +17,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/store/gallery.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+            <state>
+              <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="63">
+              <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
               <folding>
-                <element signature="e#0#111#0" expanded="true" />
+                <element signature="n#!!block;n#initSearchParams#0;n#App#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.js">
+        <entry file="file://$PROJECT_DIR$/src/components/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+            <state relative-caret-position="63">
+              <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="n#!!block;n#initSearchParams#0;n#App#0" />
+                <element signature="e#0#33#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,8 +112,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="JSX Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -113,7 +122,6 @@
       <find>searchQuery</find>
       <find>countryService</find>
       <find>setq</find>
-      <find>console.log</find>
       <find>this.state</find>
       <find>sortType</find>
       <find>sortstrin</find>
@@ -137,9 +145,10 @@
       <find>menu</find>
       <find>icon</find>
       <find>formatDate</find>
-      <find>forma</find>
       <find>deboun</find>
       <find>debounce</find>
+      <find>console.log</find>
+      <find>forma</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -160,9 +169,10 @@
         <option value="$PROJECT_DIR$/src/components/Cards.jsx" />
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/components/Counter.jsx" />
-        <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/components/Search.jsx" />
         <option value="$PROJECT_DIR$/src/store/gallery.js" />
+        <option value="$PROJECT_DIR$/src/components/index.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
       </list>
     </option>
   </component>
@@ -258,7 +268,7 @@
       <updated>1559135750701</updated>
       <workItem from="1559135751848" duration="40644000" />
       <workItem from="1559304857029" duration="646000" />
-      <workItem from="1559508174911" duration="14724000" />
+      <workItem from="1559508174911" duration="15077000" />
     </task>
     <task id="LOCAL-00001" summary="init project + add functionality">
       <created>1559157233021</created>
@@ -379,11 +389,18 @@
       <option name="project" value="LOCAL" />
       <updated>1559522802947</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="[clean] - remove unused debounce method">
+      <created>1559522961271</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1559522961271</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56014000" />
+    <option name="totallyTimeSpent" value="56367000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -429,7 +446,8 @@
     <MESSAGE value="[fix] - change style of search box" />
     <MESSAGE value="[refactor] - split app.js to small sub components" />
     <MESSAGE value="[refactor] - fix search functionality + make it work when hitting enter and submit instead of typing" />
-    <option name="LAST_COMMIT_MESSAGE" value="[refactor] - fix search functionality + make it work when hitting enter and submit instead of typing" />
+    <MESSAGE value="[clean] - remove unused debounce method" />
+    <option name="LAST_COMMIT_MESSAGE" value="[clean] - remove unused debounce method" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/App.test.js">
@@ -539,17 +557,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#initSearchParams#0;n#App#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
@@ -570,12 +577,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/store/gallery.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+        <state>
+          <caret column="8" lean-forward="true" selection-start-column="8" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="30" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
           <folding>
-            <element signature="e#0#111#0" expanded="true" />
+            <element signature="n#!!block;n#initSearchParams#0;n#App#0" />
           </folding>
         </state>
       </provider>
