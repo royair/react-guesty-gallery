@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import SearchIcon from '@material-ui/icons/Search'
 
 const useStyles = {
   root: {
@@ -28,10 +28,30 @@ const useStyles = {
 };
 
 class Search extends Component {
-  search = (e) => {
-    const { value } = e.target;
+  constructor(props) {
+    super(props);
+
+    this.state = { value: '' };
+  }
+
+  componentDidMount() {
+    this.setState(() => ({ value: this.props.store.gallery.urlParams.q }));
+  }
+
+  handleChange = (e) => {
+    this.setState({ value: e.target.value });
+  };
+
+  search = () => {
+    const { value } = this.state;
 
     this.props.store.gallery.setQ(value);
+  };
+
+  handleOnKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.search();
+    }
   };
 
   render() {
@@ -39,10 +59,14 @@ class Search extends Component {
       <Paper style={useStyles.root}>
         <InputBase style={useStyles.input}
                    placeholder="Search giphy"
-                   value={this.props.store.gallery.urlParams.q}
-                   onChange={(e) => this.search(e)}
+                   value={this.state.value}
+                   onChange={this.handleChange}
+                   onKeyPress={this.handleOnKeyPress}
         />
-        <IconButton style={useStyles.iconButton} aria-label="Search">
+        <IconButton style={useStyles.iconButton}
+                    aria-label="Search"
+                    onClick={this.search}
+        >
           <SearchIcon/>
         </IconButton>
       </Paper>
