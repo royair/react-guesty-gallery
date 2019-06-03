@@ -10,7 +10,6 @@ import {
 import axios from 'axios'
 import moment from 'moment';
 import qs from "query-string";
-import { debounce } from 'lodash';
 
 const DEFAULT_SORT_TYPE  = 'title';
 const DEFAULT_SORT_VALUE = 'asc';
@@ -28,8 +27,7 @@ class Gallery {
 
     // initiate search every time 'q' (query) has changed
     reaction(
-      () => this.urlParams.q,
-      debounce(this.search, 300));
+      () => this.urlParams.q, this.search);
 
     // update url params and website's history every time model has changed
     reaction(
